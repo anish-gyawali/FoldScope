@@ -31,6 +31,12 @@ function Home() {
               placeholder="Enter the text here...."
               className="text-grey-darkest flex-1 p-10 m-1 bg-transparent"
             ></textarea>
+            <p>
+              Total number of character :
+              <span className=" px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                {removeSpace(text).length}
+              </span>
+            </p>
           </div>
 
           {/* table to show character count */}
@@ -55,6 +61,39 @@ function Home() {
               {Object.keys(eachCharResult).map((el, idx) => (
                 <Table id={idx} character={el} total={eachCharResult[el]} />
               ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* table to show most frequent entered character */}
+        <div className="col sm:w-1/2 mt-10 mb-8">
+          <span className=" px-10 py-4 inline-flex text-xl leading-5 font-bold  bg-indigo-500 text-white">
+            Five most frequent characters in the text.
+          </span>
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Character
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Total Repeated
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.entries(eachCharResult)
+                .sort(([, a], [, b]) => b - a)
+                .slice(0, 5)
+                .map(([idx, value], i) => (
+                  <Table id={idx} total={value} character={idx} />
+                ))}
             </tbody>
           </table>
         </div>
